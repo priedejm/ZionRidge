@@ -1,0 +1,154 @@
+[
+  {
+    "id": "old-anderson-road",
+    "name": "Old Anderson Road",
+    "location": "Greenville, SC",
+    "status": "Active",
+    "description": "4 house lots on 6 acres in an incredible Greenville location.",
+    "overview": "A tightly held six-acre parcel in one of Greenville's most sought-after corridors, subdivided into four buildable house lots. The location is the standout feature - close-in access with a setting that rarely comes available.",
+    "highlights": [
+      "4 buildable house lots",
+      "6 total acres",
+      "Rare close-in Greenville location"
+    ],
+    "specs": [
+      { "label": "Acreage", "value": "6 acres" },
+      { "label": "Lots", "value": "4" },
+      { "label": "Location", "value": "Greenville, SC" }
+    ],
+    "featured": true,
+    "images": [
+      { "id": "seed-old-anderson-road-0", "url": "/assets/uploaded/listing-old-anderson-road/0.jpg", "filename": "DJI_20260325144920_0003_D.JPG" },
+      { "id": "seed-old-anderson-road-1", "url": "/assets/uploaded/listing-old-anderson-road/1.jpg", "filename": "DJI_20260325144952_0004_D.JPG" },
+      { "id": "seed-old-anderson-road-2", "url": "/assets/uploaded/listing-old-anderson-road/2.jpg", "filename": "DJI_20260325145011_0005_D.JPG" },
+      { "id": "seed-old-anderson-road-3", "url": "/assets/uploaded/listing-old-anderson-road/3.jpg", "filename": "DJI_20260325145043_0006_D.JPG" },
+      { "id": "seed-old-anderson-road-4", "url": "/assets/uploaded/listing-old-anderson-road/4.jpg", "filename": "DJI_20260325145113_0007_D.JPG" },
+      { "id": "seed-old-anderson-road-5", "url": "/assets/uploaded/listing-old-anderson-road/5.jpg", "filename": "DJI_20260325150800_0008_D.JPG" }
+    ],
+    "order": 0,
+    "createdAt": "2026-07-08T00:00:00+00:00"
+  },
+  {
+    "id": "tyger-bridge-road",
+    "name": "Tyger Bridge Road",
+    "location": "Taylors, SC",
+    "status": "Active",
+    "description": "4 one-and-a-half-acre pad sites on 6 acres in Taylors.",
+    "overview": "Six acres in Taylors divided into four generous one-and-a-half-acre pad sites - more room to build than a typical infill lot, close to Greenville's northern suburbs.",
+    "highlights": [
+      "4 pad-ready sites",
+      "1.5 acres per site",
+      "Minutes from Greenville"
+    ],
+    "specs": [
+      { "label": "Acreage", "value": "6 acres" },
+      { "label": "Lots", "value": "4" },
+      { "label": "Lot Size", "value": "~1.5 acres each" }
+    ],
+    "featured": true,
+    "images": [
+      { "id": "seed-tyger-bridge-road-0", "url": "/assets/uploaded/listing-tyger-bridge-road/0.jpg", "filename": "DJI_20260402105657_0018_D.JPG" },
+      { "id": "seed-tyger-bridge-road-1", "url": "/assets/uploaded/listing-tyger-bridge-road/1.jpg", "filename": "DJI_20260402105748_0019_D.JPG" },
+      { "id": "seed-tyger-bridge-road-2", "url": "/assets/uploaded/listing-tyger-bridge-road/2.jpg", "filename": "DJI_20260402105904_0020_D.JPG" },
+      { "id": "seed-tyger-bridge-road-3", "url": "/assets/uploaded/listing-tyger-bridge-road/3.jpg", "filename": "DJI_20260402110002_0021_D.JPG" },
+      { "id": "seed-tyger-bridge-road-4", "url": "/assets/uploaded/listing-tyger-bridge-road/4.jpg", "filename": "DJI_20260402110036_0022_D.JPG" },
+      { "id": "seed-tyger-bridge-road-5", "url": "/assets/uploaded/listing-tyger-bridge-road/5.jpg", "filename": "DJI_20260402110053_0023_D.JPG" },
+      { "id": "seed-tyger-bridge-road-6", "url": "/assets/uploaded/listing-tyger-bridge-road/6.jpg", "filename": "DJI_20260402110123_0024_D.JPG" },
+      { "id": "seed-tyger-bridge-road-7", "url": "/assets/uploaded/listing-tyger-bridge-road/7.jpg", "filename": "DJI_20260402110141_0025_D.JPG" },
+      { "id": "seed-tyger-bridge-road-8", "url": "/assets/uploaded/listing-tyger-bridge-road/8.jpg", "filename": "DJI_20260402110313_0026_D.JPG" },
+      { "id": "seed-tyger-bridge-road-9", "url": "/assets/uploaded/listing-tyger-bridge-road/9.jpg", "filename": "DJI_20260402110410_0027_D.JPG" }
+    ],
+    "order": 1,
+    "createdAt": "2026-07-08T00:00:00+00:00"
+  },
+  {
+    "id": "lucerne-drive",
+    "name": "Lucerne Drive",
+    "location": "Spartanburg, SC",
+    "status": "Active",
+    "description": "1.2-acre house flip with an additional back-lot home build.",
+    "overview": "A 1.2-acre Spartanburg property combining a full renovation flip on the front lot with a second new-build home planned for the back land - two projects on one parcel.",
+    "highlights": [
+      "Full renovation flip",
+      "Second home addition on back land",
+      "Two value-add opportunities on one lot"
+    ],
+    "specs": [
+      { "label": "Acreage", "value": "1.2 acres" },
+      { "label": "Homes", "value": "2 (flip + new build)" }
+    ],
+    "featured": true,
+    "images": [
+      { "id": "seed-lucerne-drive-0", "url": "/assets/uploaded/listing-lucerne-drive/0.jpg", "filename": "DJI_20260402093705_0012_D.JPG" },
+      { "id": "seed-lucerne-drive-1", "url": "/assets/uploaded/listing-lucerne-drive/1.jpg", "filename": "DJI_20260402093754_0014_D.JPG" },
+      { "id": "seed-lucerne-drive-2", "url": "/assets/uploaded/listing-lucerne-drive/2.jpg", "filename": "DJI_20260402093814_0015_D.JPG" },
+      { "id": "seed-lucerne-drive-3", "url": "/assets/uploaded/listing-lucerne-drive/3.jpg", "filename": "DJI_20260402093852_0016_D.JPG" },
+      { "id": "seed-lucerne-drive-4", "url": "/assets/uploaded/listing-lucerne-drive/4.jpg", "filename": "DJI_20260402093909_0017_D.JPG" }
+    ],
+    "order": 2,
+    "createdAt": "2026-07-08T00:00:00+00:00"
+  },
+  {
+    "id": "midway-road",
+    "name": "Midway Road",
+    "location": "Williamston, SC",
+    "status": "Active",
+    "description": "12.5 acres with 4 lots in Williamston.",
+    "overview": "A 12.5-acre Williamston holding positioned for a four-lot subdivision. Photos coming soon as site work begins.",
+    "highlights": [
+      "4-lot subdivision",
+      "12.5 total acres"
+    ],
+    "specs": [
+      { "label": "Acreage", "value": "12.5 acres" },
+      { "label": "Lots", "value": "4" }
+    ],
+    "featured": false,
+    "images": [],
+    "order": 3,
+    "createdAt": "2026-07-08T00:00:00+00:00"
+  },
+  {
+    "id": "friendship-church-road",
+    "name": "Friendship Church Road",
+    "location": "Gray Court, SC",
+    "status": "Active",
+    "description": "4 roughly one-acre lots in Gray Court.",
+    "overview": "Four approximately one-acre lots on Friendship Church Road - straightforward single-lot opportunities in a quiet Gray Court setting.",
+    "highlights": [
+      "4 roughly one-acre lots",
+      "Quiet Gray Court setting"
+    ],
+    "specs": [
+      { "label": "Acreage", "value": "~4 acres total" },
+      { "label": "Lots", "value": "4" }
+    ],
+    "featured": false,
+    "images": [
+      { "id": "seed-friendship-church-road-0", "url": "/assets/uploaded/listing-friendship-church-road/0.jpg", "filename": "DJI_20260630131324_0120_D.JPG" },
+      { "id": "seed-friendship-church-road-1", "url": "/assets/uploaded/listing-friendship-church-road/1.jpg", "filename": "DJI_20260630131411_0121_D.JPG" }
+    ],
+    "order": 4,
+    "createdAt": "2026-07-08T00:00:00+00:00"
+  },
+  {
+    "id": "christmas-tree-road",
+    "name": "Christmas Tree Road",
+    "location": "Gray Court, SC",
+    "status": "Active",
+    "description": "4 one-acre lots on 4.2 total acres in Gray Court.",
+    "overview": "Four roughly one-acre lots totaling 4.2 acres on Christmas Tree Road, rounding out our Gray Court holdings. Photos coming soon.",
+    "highlights": [
+      "4 roughly one-acre lots",
+      "4.2 total acres"
+    ],
+    "specs": [
+      { "label": "Acreage", "value": "4.2 acres" },
+      { "label": "Lots", "value": "4" }
+    ],
+    "featured": false,
+    "images": [],
+    "order": 5,
+    "createdAt": "2026-07-08T00:00:00+00:00"
+  }
+]
