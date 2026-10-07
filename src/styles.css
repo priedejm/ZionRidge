@@ -63,6 +63,10 @@
   --green-soft: oklch(0.55 0.045 158);
   --cream: oklch(0.945 0.012 85);
 
+  /* Listing status badges — Active uses --green-soft */
+  --status-pending: oklch(0.83 0.12 88);
+  --status-sold: oklch(0.52 0.13 27);
+
   --background: var(--cream);
   --foreground: var(--green-dark);
   --card: var(--cream);

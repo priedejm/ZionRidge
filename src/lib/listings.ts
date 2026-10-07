@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import comingSoon from "@/assets/land-coming-soon.jpg";
 import type { Project, ProjectStatus } from "@/data/projects";
+import { SITE_IMAGE_SLOTS, useSiteImages } from "@/lib/siteImages";
 
 export interface ApiListingImage {
   id: string;
@@ -31,7 +31,7 @@ export async function fetchListings(): Promise<ApiListing[]> {
   return res.json();
 }
 
-export function toProject(listing: ApiListing): Project {
+export function toProject(listing: ApiListing, placeholder: string): Project {
   const urls = listing.images.map((img) => img.url);
   return {
     id: listing.id,
@@ -39,7 +39,7 @@ export function toProject(listing: ApiListing): Project {
     location: listing.location,
     status: listing.status,
     description: listing.description,
-    image: urls[0] ?? comingSoon,
+    image: urls[0] ?? placeholder,
     images: urls.length > 0 ? urls : undefined,
     featured: listing.featured,
     overview: listing.overview,
@@ -49,10 +49,13 @@ export function toProject(listing: ApiListing): Project {
 }
 
 export function useProjects() {
+  const placeholder =
+    useSiteImages().src("listing-placeholder") ?? SITE_IMAGE_SLOTS["listing-placeholder"].fallback;
   return useQuery({
     queryKey: ["listings"],
     queryFn: fetchListings,
-    select: (data) => [...data].sort((a, b) => a.order - b.order).map(toProject),
+    select: (data) =>
+      [...data].sort((a, b) => a.order - b.order).map((l) => toProject(l, placeholder)),
   });
 }
 

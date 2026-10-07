@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LinkButton } from "@/components/site/Button";
 import { Reveal } from "@/components/site/Reveal";
-import aboutLand from "@/assets/Friendship Church Road/DJI_20260630131324_0120_D.JPG";
-import raleyHeadshot from "@/assets/RaleyHeadshot.jpg";
+import { useSiteImages, type SiteImageSlot } from "@/lib/siteImages";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,14 +24,41 @@ const values = [
   { t: "Hands-On Execution", b: "Land, design, engineering, and entitlement are run by our team - not handed off." },
 ];
 
-type TeamMember = { name: string; role: string; initials: string; photo?: string };
+type Credential = { degree: string; school: string };
+
+type TeamMember = {
+  name: string;
+  role: string;
+  initials: string;
+  photoSlot: SiteImageSlot;
+  credentials?: Credential[];
+};
 
 const team: TeamMember[] = [
-  { name: "John Kanaan", role: "President / Owner", initials: "JK" },
-  { name: "Raley Bruce", role: "Operations Coordinator", initials: "RB", photo: raleyHeadshot },
+  {
+    name: "John Kanaan",
+    role: "President / Owner",
+    initials: "JK",
+    photoSlot: "team-john",
+    credentials: [
+      { degree: "Bachelor of Science in Business Administration, Business Management", school: "University of South Carolina" },
+      { degree: "Master of Real Estate Development (MRED)", school: "Clemson University" },
+    ],
+  },
+  {
+    name: "Raley Bruce",
+    role: "Operations Coordinator",
+    initials: "RB",
+    photoSlot: "team-raley",
+    credentials: [
+      { degree: "Bachelor of Arts in Interdisciplinary Studies", school: "University of South Carolina Upstate" },
+    ],
+  },
 ];
 
 function AboutPage() {
+  const siteImages = useSiteImages();
+
   return (
     <>
       {/* HERO */}
@@ -106,23 +132,36 @@ function AboutPage() {
           </Reveal>
 
           <div className="mt-16 grid max-w-3xl gap-6 sm:grid-cols-2">
-            {team.map((m, i) => (
-              <Reveal key={m.name} delay={i * 100} className="border border-[var(--cream)]/15 p-6">
-                <div className="flex aspect-square w-full items-center justify-center overflow-hidden bg-[var(--green-mid)]">
-                  {m.photo ? (
-                    <img src={m.photo} alt={m.name} className="h-full w-full object-cover" />
-                  ) : (
-                    <span className="font-display text-5xl font-semibold text-[var(--cream)]/70">
-                      {m.initials}
-                    </span>
+            {team.map((m, i) => {
+              const photo = siteImages.src(m.photoSlot);
+              return (
+                <Reveal key={m.name} delay={i * 100} className="border border-[var(--cream)]/15 p-6">
+                  <div className="flex aspect-square w-full items-center justify-center overflow-hidden bg-[var(--green-mid)]">
+                    {photo ? (
+                      <img src={photo} alt={m.name} className="h-full w-full object-cover" />
+                    ) : siteImages.ready ? (
+                      <span className="font-display text-5xl font-semibold text-[var(--cream)]/70">
+                        {m.initials}
+                      </span>
+                    ) : null}
+                  </div>
+                  <h3 className="mt-6 font-display text-xl font-semibold">{m.name}</h3>
+                  <p className="mt-1 font-display text-[11px] uppercase tracking-[0.22em] text-[var(--cream)]/60">
+                    {m.role}
+                  </p>
+                  {m.credentials && (
+                    <ul className="mt-5 space-y-3 border-t border-[var(--cream)]/15 pt-5">
+                      {m.credentials.map((c) => (
+                        <li key={c.degree}>
+                          <p className="text-sm leading-snug text-[var(--cream)]/85">{c.degree}</p>
+                          <p className="mt-0.5 text-xs text-[var(--cream)]/55">{c.school}</p>
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                </div>
-                <h3 className="mt-6 font-display text-xl font-semibold">{m.name}</h3>
-                <p className="mt-1 font-display text-[11px] uppercase tracking-[0.22em] text-[var(--cream)]/60">
-                  {m.role}
-                </p>
-              </Reveal>
-            ))}
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -131,7 +170,7 @@ function AboutPage() {
       <section className="bg-[var(--green-dark)] text-[var(--cream)]">
         <div className="relative">
           <img
-            src={aboutLand}
+            src={siteImages.src("about-banner")}
             alt="South Carolina land held by Zion Ridge"
             loading="lazy"
             width={1280}

@@ -1,16 +1,34 @@
-const ADMIN_KEY = import.meta.env.VITE_ADMIN_PASSWORD as string | undefined;
-const SESSION_STORAGE_KEY = "zrd-admin-authed";
+// The admin password lives only in server/config.php. The login screen sends
+// what the user typed to /login.php to verify it, then keeps it for this tab's
+// session and sends it as X-Admin-Key on every mutating request.
+const SESSION_STORAGE_KEY = "zrd-admin-key";
 
-export function checkAdminPassword(input: string): boolean {
-  return !!ADMIN_KEY && input === ADMIN_KEY;
+function getStoredKey(): string | null {
+  try {
+    return sessionStorage.getItem(SESSION_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export class InvalidPasswordError extends Error {}
+
+export async function login(password: string): Promise<void> {
+  const res = await fetch("/login.php", {
+    method: "POST",
+    headers: { "X-Admin-Key": password },
+  });
+  if (res.status === 401) {
+    throw new InvalidPasswordError("Incorrect password.");
+  }
+  if (!res.ok) {
+    throw new Error(await parseErrorMessage(res));
+  }
+  sessionStorage.setItem(SESSION_STORAGE_KEY, password);
 }
 
 export function isAdminAuthed(): boolean {
-  return sessionStorage.getItem(SESSION_STORAGE_KEY) === "1";
-}
-
-export function setAdminAuthed() {
-  sessionStorage.setItem(SESSION_STORAGE_KEY, "1");
+  return !!getStoredKey();
 }
 
 export function clearAdminAuthed() {
@@ -24,19 +42,18 @@ async function parseErrorMessage(res: Response): Promise<string> {
 
 export async function adminFetch<T>(input: string, init: RequestInit = {}): Promise<T> {
   const headers = new Headers(init.headers);
-  headers.set("X-Admin-Key", ADMIN_KEY ?? "");
+  headers.set("X-Admin-Key", getStoredKey() ?? "");
   const res = await fetch(input, { ...init, headers });
+  if (res.status === 401) {
+    throw new Error("Password was changed or rejected — log out and sign in again.");
+  }
   if (!res.ok) {
     throw new Error(await parseErrorMessage(res));
   }
   return res.json();
 }
 
-export async function adminFetchJson<T>(
-  input: string,
-  method: string,
-  body: unknown,
-): Promise<T> {
+export async function adminFetchJson<T>(input: string, method: string, body: unknown): Promise<T> {
   return adminFetch<T>(input, {
     method,
     headers: { "Content-Type": "application/json" },

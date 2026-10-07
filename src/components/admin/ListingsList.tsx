@@ -20,7 +20,7 @@ import type { ApiListing } from "@/lib/listings";
 const statusBadge: Record<ApiListing["status"], string> = {
   Active: "bg-emerald-100 text-emerald-800",
   Pending: "bg-amber-100 text-amber-800",
-  Sold: "bg-slate-200 text-slate-700",
+  Sold: "bg-red-100 text-red-800",
 };
 
 interface ListingsListProps {

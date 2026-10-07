@@ -19,8 +19,8 @@ import { useEffect, useState } from "react";
 
 const statusStyles: Record<Project["status"], string> = {
   Active: "bg-[var(--green-soft)] text-[var(--cream)]",
-  Pending: "bg-transparent text-[var(--cream)] border border-[var(--cream)]/60",
-  Sold: "bg-[var(--cream)]/40 text-[var(--green-dark)]",
+  Pending: "bg-[var(--status-pending)] text-[var(--green-dark)]",
+  Sold: "bg-[var(--status-sold)] text-[var(--cream)]",
 };
 
 export function ProjectCard({ project, theme = "dark" }: { project: Project; theme?: "dark" | "light" }) {

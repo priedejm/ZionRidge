@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { adminFetch, adminFetchJson } from "@/lib/admin";
+import { prepareImageUpload } from "@/lib/prepareImageUpload";
 import { cn } from "@/lib/utils";
 import type { ApiListingImage } from "@/lib/listings";
 
@@ -33,7 +34,7 @@ export function ImageUploader({ listingId, images }: ImageUploaderProps) {
       for (const file of Array.from(files)) {
         const form = new FormData();
         form.append("listingId", listingId);
-        form.append("file", file);
+        form.append("file", await prepareImageUpload(file));
         await adminFetch("/upload-image.php", { method: "POST", body: form });
       }
       await invalidate();

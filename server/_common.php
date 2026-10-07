@@ -6,8 +6,20 @@
 require_once __DIR__ . '/config.php';
 
 define('DATA_FILE', __DIR__ . '/data/projects.json');
+define('SITE_IMAGES_FILE', __DIR__ . '/data/site-images.json');
 define('UPLOAD_ROOT', __DIR__ . '/assets/uploaded');
 define('UPLOAD_URL_BASE', '/assets/uploaded');
+
+// Photo slots around the marketing site that the admin can override. Must
+// match SITE_IMAGE_SLOTS in src/lib/siteImages.ts — anything else is rejected.
+const SITE_IMAGE_SLOTS = [
+    'home-about',
+    'home-partner',
+    'about-banner',
+    'team-john',
+    'team-raley',
+    'listing-placeholder',
+];
 
 function send_cors_headers(): void
 {
@@ -58,12 +70,37 @@ function require_admin_key(): void
 // missing/empty rather than erroring — a fresh deploy starts with no listings.
 function load_listings(): array
 {
-    if (!file_exists(DATA_FILE)) {
+    return read_json_file(DATA_FILE, 'listings');
+}
+
+// Writes the full listings array back under an exclusive lock. This is the
+// only concurrency protection in place — acceptable for single-admin use,
+// not a substitute for a real database.
+function save_listings(array $listings): void
+{
+    write_json_file(DATA_FILE, $listings, 'listings');
+}
+
+// Site photo overrides, keyed by slot: { "home-about": {url, filename}, ... }.
+// A slot missing from this file means the site uses its built-in photo.
+function load_site_images(): array
+{
+    return read_json_file(SITE_IMAGES_FILE, 'site images');
+}
+
+function save_site_images(array $images): void
+{
+    write_json_file(SITE_IMAGES_FILE, $images, 'site images');
+}
+
+function read_json_file(string $path, string $label): array
+{
+    if (!file_exists($path)) {
         return [];
     }
-    $fh = fopen(DATA_FILE, 'r');
+    $fh = fopen($path, 'r');
     if ($fh === false) {
-        json_error('Could not read listings data', 500);
+        json_error("Could not read $label data", 500);
     }
     flock($fh, LOCK_SH);
     $raw = stream_get_contents($fh);
@@ -74,22 +111,72 @@ function load_listings(): array
     return is_array($data) ? $data : [];
 }
 
-// Writes the full listings array back under an exclusive lock. This is the
-// only concurrency protection in place — acceptable for single-admin use,
-// not a substitute for a real database.
-function save_listings(array $listings): void
+function write_json_file(string $path, array $data, string $label): void
 {
-    $fh = fopen(DATA_FILE, 'c+');
+    $fh = fopen($path, 'c+');
     if ($fh === false) {
-        json_error('Could not write listings data', 500);
+        json_error("Could not write $label data", 500);
     }
     flock($fh, LOCK_EX);
     ftruncate($fh, 0);
     rewind($fh);
-    fwrite($fh, json_encode($listings, JSON_PRETTY_PRINT));
+    fwrite($fh, json_encode($data, JSON_PRETTY_PRINT));
     fflush($fh);
     flock($fh, LOCK_UN);
     fclose($fh);
+}
+
+// Validates $_FILES['file'] is a real JPEG/PNG/WebP under 5MB and returns
+// the extension to save it with. Errors out (JSON 400) otherwise.
+// Call before reading any other $_POST field: when a request exceeds PHP's
+// post_max_size, PHP silently empties $_POST and $_FILES.
+function validate_uploaded_image(): string
+{
+    if (empty($_FILES) && (int)($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+        json_error('Upload is larger than the server allows (' . ini_get('post_max_size') . ')', 413);
+    }
+    $uploadError = $_FILES['file']['error'] ?? UPLOAD_ERR_NO_FILE;
+    if ($uploadError === UPLOAD_ERR_INI_SIZE || $uploadError === UPLOAD_ERR_FORM_SIZE) {
+        json_error('File is larger than the server allows (' . ini_get('upload_max_filesize') . ')', 413);
+    }
+    if ($uploadError !== UPLOAD_ERR_OK) {
+        json_error('No valid file uploaded');
+    }
+
+    $file = $_FILES['file'];
+    $maxBytes = 5 * 1024 * 1024;
+    if ($file['size'] > $maxBytes) {
+        json_error('File exceeds 5MB limit');
+    }
+
+    $imageInfo = @getimagesize($file['tmp_name']);
+    if ($imageInfo === false) {
+        json_error('File is not a valid image');
+    }
+
+    $allowedMimes = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+    ];
+    $mime = $imageInfo['mime'];
+    if (!isset($allowedMimes[$mime])) {
+        json_error('Unsupported image type — use JPEG, PNG, or WebP');
+    }
+    return $allowedMimes[$mime];
+}
+
+// Removes a previously uploaded file given its public URL. Ignores URLs
+// outside the upload folder so a bad record can't delete anything else.
+function delete_uploaded_url(string $url): void
+{
+    if (strpos($url, UPLOAD_URL_BASE . '/') !== 0 || strpos($url, '..') !== false) {
+        return;
+    }
+    $path = UPLOAD_ROOT . substr($url, strlen(UPLOAD_URL_BASE));
+    if (is_file($path)) {
+        @unlink($path);
+    }
 }
 
 function find_listing_index(array $listings, string $id): int

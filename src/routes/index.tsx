@@ -4,8 +4,7 @@ import { LinkButton } from "@/components/site/Button";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useProjects } from "@/lib/listings";
-import aboutLand from "@/assets/Old Anderson/DJI_20260325145011_0005_D.JPG";
-import partnerBuild from "@/assets/Tyger Bridge Road/DJI_20260402110123_0024_D.JPG";
+import { useSiteImages } from "@/lib/siteImages";
 import zrdLogo from "@/assets/zrd-logo.svg";
 
 export const Route = createFileRoute("/")({
@@ -49,6 +48,7 @@ const steps = [
 function HomePage() {
   const { data } = useProjects();
   const featured = (data ?? []).filter((p) => p.featured).slice(0, 3);
+  const siteImages = useSiteImages();
 
   return (
     <>
@@ -195,7 +195,7 @@ function HomePage() {
           </div>
           <div className="relative min-h-[420px] md:min-h-0">
             <img
-              src={aboutLand}
+              src={siteImages.src("home-about")}
               alt="Wooded land in the Zion Ridge portfolio near Greenville, SC"
               loading="lazy"
               width={1280}
@@ -260,7 +260,7 @@ function HomePage() {
           </Reveal>
           <Reveal className="relative aspect-[4/5] w-full overflow-hidden" delay={150}>
             <img
-              src={partnerBuild}
+              src={siteImages.src("home-partner")}
               alt="Zion Ridge land in the Upstate of South Carolina"
               loading="lazy"
               width={1280}
